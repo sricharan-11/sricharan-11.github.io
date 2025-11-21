@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Architecture & Insights</title>
+    <meta name="description" content="Personal portfolio highlighting achievements, architecture philosophy, and insights.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Left Side Ribbon / Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span>Portfolio</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#introduction" class="nav-link">Introduction</a>
+                    <ul class="sub-nav">
+                        <li><a href="#quick-intro" class="sub-link">Quick Intro</a></li>
+                        <li><a href="#achievements" class="sub-link">Achievements</a></li>
+                        <li><a href="#long-intro" class="sub-link">Long Intro</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#architecture" class="nav-link">Architecture</a>
+                    <ul class="sub-nav">
+                        <li><a href="#arch-dos" class="sub-link">DOs</a></li>
+                        <li><a href="#arch-donts" class="sub-link">DON'Ts</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="#resume" class="nav-link">Resume</a></li>
+                <li class="nav-item"><a href="#blogs" class="nav-link">Blogs</a></li>
+                <li class="nav-item"><a href="#inferences" class="nav-link">Inferences & Analogies</a></li>
+                <li class="nav-item"><a href="#cv" class="nav-link">CV</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            
+            <!-- Introduction Section -->
+            <section id="introduction" class="main-section">
+                <h1 class="section-title">Introduction</h1>
+                
+                <div id="quick-intro" class="sub-section">
+                    <h2>Quick Introduction</h2>
+                    <p>Hello! I am a passionate technologist and architect dedicated to building scalable, efficient, and user-centric systems. Welcome to my digital garden where I share my journey, principles, and learnings.</p>
+                </div>
+
+                <div id="achievements" class="sub-section">
+                    <h2>Achievements</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3>System Optimization</h3>
+                            <p>Reduced latency by 40% in high-frequency trading platforms through optimized kernel tuning.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Cloud Migration</h3>
+                            <p>Led the successful migration of legacy monoliths to microservices on AWS, cutting costs by 25%.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Open Source</h3>
+                            <p>Active contributor to major CNCF projects with over 50+ merged PRs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="long-intro" class="sub-section">
+                    <h2>Long Introduction</h2>
+                    <p>My journey began with a curiosity for how things work under the hood. Over the years, this curiosity has evolved into a career defined by solving complex architectural puzzles. I believe in code that is not just functional but also elegant and maintainable. From low-level system programming to high-level distributed system design, I strive for excellence in every layer of the stack.</p>
+                    <p>When I'm not coding, I'm exploring new paradigms in AI, reading about cognitive science, or hiking in the mountains to clear my mind.</p>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="main-section">
+                <h1 class="section-title">Architecture</h1>
+                
+                <div id="arch-dos" class="sub-section">
+                    <h2>DOs</h2>
+                    <ul class="checklist do-list">
+                        <li><strong>Design for Failure:</strong> Always assume components will fail and build resilience.</li>
+                        <li><strong>Keep it Simple:</strong> Complexity is the enemy of reliability.</li>
+                        <li><strong>Document Decisions:</strong> ADRs (Architecture Decision Records) are your best friends.</li>
+                        <li><strong>Automate Everything:</strong> From testing to deployment, manual processes are bugs waiting to happen.</li>
+                    </ul>
+                </div>
+
+                <div id="arch-donts" class="sub-section">
+                    <h2>DON'Ts</h2>
+                    <ul class="checklist dont-list">
+                        <li><strong>Don't Optimize Prematurely:</strong> Measure first, then optimize where it matters.</li>
+                        <li><strong>Don't Ignore Security:</strong> Security is not an afterthought; it's a foundational requirement.</li>
+                        <li><strong>Don't Reinvent the Wheel:</strong> Use established patterns and libraries unless you have a very specific reason not to.</li>
+                        <li><strong>Don't Couple Tightly:</strong> Loose coupling allows for independent evolution of services.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Resume Section -->
+            <section id="resume" class="main-section">
+                <h1 class="section-title">Resume</h1>
+                <div class="resume-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2023 - Present</div>
+                            <div class="timeline-content">
+                                <h3>Senior Solutions Architect</h3>
+                                <h4>Tech Corp Global</h4>
+                                <p>Leading the architecture of next-gen AI platforms.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2020 - 2023</div>
+                            <div class="timeline-content">
+                                <h3>Lead Software Engineer</h3>
+                                <h4>Innovate Inc.</h4>
+                                <p>Spearheaded the development of the core payment processing engine.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2018 - 2020</div>
+                            <div class="timeline-content">
+                                <h3>Software Developer</h3>
+                                <h4>StartUp X</h4>
+                                <p>Full-stack development using React and Node.js.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="btn download-btn">Download Full Resume</a>
+                </div>
+            </section>
+
+            <!-- Blogs Section -->
+            <section id="blogs" class="main-section">
+                <h1 class="section-title">Blogs</h1>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-meta">Oct 12, 2023</div>
+                        <h3>The Future of Serverless</h3>
+                        <p>Exploring the pros and cons of adopting a fully serverless architecture in 2024.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </article>
+                    <article class="blog-card">
+                        <div class="blog-meta">Sep 05, 2023</div>
+                        <h3>Understanding CAP Theorem</h3>
+                        <p>A deep dive into consistency, availability, and partition tolerance in distributed systems.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </article>
+                    <article class="blog-card">
+                        <div class="blog-meta">Aug 20, 2023</div>
+                        <h3>Rust vs Go</h3>
+                        <p>My personal take on when to use Rust and when to stick with Go for backend services.</p>
+                        <a href="#" class="read-more">Read More &rarr;</a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Inferences and Analogies Section -->
+            <section id="inferences" class="main-section">
+                <h1 class="section-title">Inferences & Analogies</h1>
+                <div class="analogy-content">
+                    <div class="analogy-item">
+                        <h3>Code as Gardening</h3>
+                        <p>Software development is more like gardening than building. It requires constant pruning, watering, and care. You can't just build it and walk away; weeds (technical debt) will grow, and the environment (dependencies) will change.</p>
+                    </div>
+                    <div class="analogy-item">
+                        <h3>The Orchestra of Microservices</h3>
+                        <p>A monolith is a one-man band—easy to coordinate but limited in scale. Microservices are an orchestra. Each musician (service) must be excellent on their own, but the real magic happens with the conductor (orchestrator) and the sheet music (API contracts).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CV Section -->
+            <section id="cv" class="main-section">
+                <h1 class="section-title">Curriculum Vitae</h1>
+                <div class="cv-preview">
+                    <p>For a detailed academic and research history, please view my full CV.</p>
+                    <div class="cv-placeholder">
+                        <span>[ CV Preview / PDF Embed ]</span>
+                    </div>
+                    <a href="#" class="btn download-btn">Download CV</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
