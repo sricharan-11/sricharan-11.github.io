@@ -2,10 +2,11 @@
 
 ## Quick Intro
 ### Pentapati Sri Charan
-**Role:** Solution Architect
+**Role:** Senior Architect
 
 **Bio:**
-I specialize in digitalization, automation, and strategic architecture. I bridge the gap between complex technical requirements and executive strategy, creating scalable systems that align with long-term visions.
+I specialize in digitalization and strategic design thinking. I bridge the gap between complex technical requirements and executive strategy, creating scalable systems that align with long-term visions.
+Passionate in building enterprise systems from ground up with multi-lens approach. 
 
 **Contact Info:**
 - Email: sricharan.p99@gmail.com (Commented out in HTML)
@@ -15,21 +16,16 @@ I specialize in digitalization, automation, and strategic architecture. I bridge
 
 ## Achievements
 ### Google Solutioning All Star
-Recognized as a **Global All Star for Solution Engineering** by Google Cloud in 2023.
+Recognized as **All Star, Solution Engineering** by **Google Cloud** in 2023.
 
-### 80% Faster Deployment
-Solutioned and implemented pilot GitOps & DevSecOps practices, reducing app deployment time by 80%.
+### iSolution
+Awardee of Annual Tech Efficiency Award (2024) & recepient of CEO's Appreciation letter (2025)
 
-### 175% Business Growth
-Facilitated massive growth by streamlining delivery procedures and ensuring audit compliance.
-
-### Cloud Optimization
-Reduced manual IT operations by 50% through gcloud automation scripts and IaaS rehosting.
 
 ## Long Introduction
 My professional journey is defined by a relentless pursuit of architectural excellence and operational efficiency. I have spearheaded major cloud adoption strategies, designing modular and reusable blocks that perpetuate to the next stage of evolution. From architecting Landing Zones with high-availability NVAs to implementing cloud-native spokes with Kubernetes and ArgoCD, I ensure security and compliance are never afterthoughts.
 
-I believe in the power of "Code as Gardening"—constant pruning and care. Whether it's revamping technical strategies for multi-cloud environments or leading engineering teams with personalized guidance, my goal is always to create captivating outcomes via predictive analysis and strategic advocations.
+I believe in the power of "Technology as Gardening"—constant pruning and care. Whether it's revamping technical strategies for multi-cloud environments or leading engineering teams with personalized guidance, my goal is always to create captivating outcomes via predictive analysis and strategic advocations.
 
 I am seeking an environment with openness for ideas, new perspectives, and room for cross-functional learning and ample growth.
 
@@ -41,7 +37,8 @@ I am seeking an environment with openness for ideas, new perspectives, and room 
 - **Keep it Simple:** Great architecture is not the complex one, but a simple one that fits the scenario
 - **Document Decisions:** ADRs are vital. Standardize delivery/changes procedures for audit compliance.
 - **Define Priorities:** There's no ideal technology that would ever exist, choose the stack that caters to your priorities. 
-- **Design for Failure:** Always assume components will fail and build resilience (BCDR Strategies).
+- **Design for Failure:** Always assume components/processes will fail and build resilience (BCDR Strategies).
+- **RTDT:** Better to Read The Document Twice, than to implement it wrong the first time.
 - **Save Compute:** Save Environment.
 
 
@@ -56,9 +53,9 @@ I am seeking an environment with openness for ideas, new perspectives, and room 
 - **Don't Start without a Don't List:** Scope sprawl, technology sprawl, budget sprawl are inevitable when the boundaries aren't set prior.
 
 
-## Technology Architecture
+## Architectural Artifacts
 ## 
- 
+<drawio htmls>
 
 ---
 
@@ -86,7 +83,7 @@ I am seeking an environment with openness for ideas, new perspectives, and room 
 ### Solution Architect, Engineering Lead
 **Shivaami Cloud Services | Mumbai**
 *Oct 2021 – Feb 2024*
-- Started as an engineer and was promoted soon, Leading a 9-member Cloud and Development team with personalized technical guidance, emphasizing self-sustainability and operational efficiency.
+- Started as a multi-cloud engineer and was promoted soon, Leading a 10-member Cloud and Development team with personalized technical guidance, emphasizing self-sustainability and operational efficiency.
 - Architected and implemented cloud migration solutions, BCDR strategies for Fin-tech to Healthcare clients on GCP, Azure, and AWS.
 - Spearheaded enterprise GCP projects, making systems dynamically scalable through microservices adoption, achieving 20% savings.
 - Initiated value-addition strategies for key clients, increasing customer stickiness and retention by over 50%, contributing 5% of net new revenue.
@@ -106,6 +103,8 @@ I am seeking an environment with openness for ideas, new perspectives, and room 
 - **Solutioning:** Landing Zone, NVAs, Compliance (NCA), Automation, HLD/LLD, BCDR Strategy
 - **DevSecOps & GitOps:** Docker, Kubernetes, CI/CD, Snyk, Git, Terraform, KCC, ARM
 - **Scripting:** Cloud Shell CLI, PowerShell, Bash, Python
+- **AI (Training Mode):** LangChain, RAG, Context Engineering, Ollama
+- **Soft Skills:** Responsibility, Team Enablement, Quick Grasping, Adaptability, Eloquence
 
 ## Education & Certifications
 ### Education
@@ -115,9 +114,6 @@ IIT Dharwad
 ### Certifications
 - Professional Cloud Architect (Google)
 - Azure Solutions Architect Expert (Microsoft)
-
-### Soft Skills
-Responsibility, Team Enablement, Quick Grasping, Adaptability, Eloquence
 
 [Download Full Resume](Sri-Charan-Resume.pdf)
 
@@ -144,14 +140,12 @@ Governance and strategy checks for small to medium product-based startups.
 
 # Inferences & Analogies
 
-### Code as Gardening
-Software development is more like gardening than building. It requires constant pruning, watering, and care. You can't just build it and walk away; weeds (technical debt) will grow, and the environment (dependencies) will change.
+### Realization 
+Life is not all about technical architecture, code, agents. Hit that 100kg benchpress, create memories with your aging parents, randomly compliment strangers, take up an investigative case on a conspiracy theory, go on hitchhiking, enroute a bike trip with no destination, understand the creators through their oeuvres, study some non-mainstream science. 
 
-### The Orchestra of Microservices
-A monolith is a one-man band—easy to coordinate but limited in scale. Microservices are an orchestra. Each musician (service) must be excellent on their own, but the real magic happens with the conductor (orchestrator) and the sheet music (API contracts).
 
 ---
 
-# Curriculum Vitae
-For a detailed academic and research history, please view my full CV.
+# Resume Download
+For a brief documented version of my professional journey, please download my resume.
 [Download Full Resume](Sri-Charan-Resume.pdf)
