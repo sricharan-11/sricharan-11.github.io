@@ -85,22 +85,114 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // Scroll-driven Zoom Animation for Diagram
-    const diagramContainer = document.querySelector('.diagram-container');
-    if (diagramContainer) {
-        window.addEventListener('scroll', () => {
-            const rect = diagramContainer.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
+    // Diagram Carousel Functionality
+    const track = document.querySelector('.carousel-track');
+    const cards = document.querySelectorAll('.carousel-card');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dots = document.querySelectorAll('.dot');
+    const modal = document.getElementById('diagram-modal');
+    const modalIframe = document.getElementById('modal-iframe');
+    const modalClose = document.querySelector('.modal-close');
 
-            // Calculate visibility ratio
-            // Start becoming visible when the top enters the viewport
-            // Reach full size when the top is at 20% of the viewport (near top)
+    let currentIndex = 3; // Start at GCP LLD Sample 1 (index 3)
+
+    function updateCarousel() {
+        if (!track) return;
+
+        // Cards are 100% width, so offset = currentIndex * container width
+        const containerWidth = track.parentElement.offsetWidth;
+        const offset = currentIndex * containerWidth;
+        track.style.transform = `translateX(-${offset}px)`;
+
+        // Update active class on cards
+        cards.forEach((card, i) => {
+            card.classList.toggle('active', i === currentIndex);
+        });
+
+        // Update dots
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    // Initialize carousel at default position
+    if (track) {
+        updateCarousel();
+    }
+
+    // Navigation arrows
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+    }
+
+    // Dot navigation
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+        });
+    });
+
+    // Recalculate on window resize
+    window.addEventListener('resize', () => {
+        updateCarousel();
+    });
+
+    // Modal close handlers
+    if (modalClose) {
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('active');
+            modalIframe.src = '';
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            modalIframe.src = '';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close modal on backdrop click
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                modalIframe.src = '';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // Scroll-driven Zoom Animation for Carousel Container
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (carouselContainer) {
+        window.addEventListener('scroll', () => {
+            const rect = carouselContainer.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
 
             // Distance from the bottom of the viewport
             const distanceFromBottom = windowHeight - rect.top;
 
-            // Define the scroll distance over which the animation happens
-            // Animate from entry (rect.top = windowHeight) until rect.top = windowHeight * 0.4
+            // Animate over 60% of viewport height
             const range = windowHeight * 0.6;
 
             let progress = distanceFromBottom / range;
@@ -111,12 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calculate scale: 0.25 -> 1.0
             const scale = 0.25 + (0.75 * progress);
 
-            // Calculate opacity: 0 -> 1
-            // Make opacity appear a bit faster to avoid seeing 25% ghost too long
+            // Calculate opacity: 0 -> 1 (appear faster to avoid ghost)
             const opacity = Math.min(progress * 1.5, 1);
 
-            diagramContainer.style.transform = `scale(${scale})`;
-            diagramContainer.style.opacity = opacity;
+            carouselContainer.style.transform = `scale(${scale})`;
+            carouselContainer.style.opacity = opacity;
         });
 
         // Trigger once on load in case it's already in view

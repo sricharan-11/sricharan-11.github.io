@@ -34,7 +34,9 @@ body {
 
 /* Layout */
 .app-container {
-    display: flex;
+    /* display: flex; Removed to fix layout overspill with fixed sidebar */
+    position: relative;
+    /* Ensure it's a positioning context */
     min-height: 100vh;
 }
 
@@ -180,7 +182,7 @@ body {
 .content {
     margin-left: var(--sidebar-width);
     padding: 4rem 6rem;
-    width: 100%;
+    /* width: 100% removed to fix overspill */
     max-width: 1200px;
 }
 
@@ -311,6 +313,10 @@ p {
     border: 4px solid var(--bg-color);
 }
 
+.timeline-item.no-dot::before {
+    display: none;
+}
+
 .timeline-date {
     font-size: 0.9rem;
     color: var(--accent-color);
@@ -430,31 +436,227 @@ p {
     }
 }
 
-/* Diagram Section with Zoom Animation */
-.diagram-container {
-    width: 100%;
-    height: 600px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+/* Diagram Carousel */
+.diagram-intro {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
 
-    /* Animation Initial State */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    /* Zoom animation initial state - animated via JS on scroll */
     transform: scale(0.25);
     opacity: 0;
     transform-origin: center center;
-    /* We use JS for the animation, so no transition on transform/opacity to avoid lag */
     will-change: transform, opacity;
 }
 
-.diagram-frame {
+.carousel-viewport {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-card {
+    flex: 0 0 100%;
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 0.5s ease;
+    opacity: 0.3;
+    transform: scale(0.92);
+    pointer-events: none;
+}
+
+.carousel-card.active {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    pointer-events: auto;
+}
+
+.card-preview {
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.card-preview iframe {
     width: 100%;
     height: 100%;
     border: none;
     display: block;
+    color-scheme: light;
+    background: #ffffff;
 }
 
-/* Responsive */
+.card-icon {
+    font-size: 4rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.card-label {
+    padding: 1.2rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    background: var(--surface);
+}
+
+/* Carousel Navigation - Floating over side tiles */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(40, 44, 52, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 8px 32px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-prev {
+    left: 16px;
+}
+
+.carousel-next {
+    right: 16px;
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.carousel-nav:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    font-family: monospace;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.dot {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.dot::before {
+    content: '•';
+}
+
+.dot:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.dot.active {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.dot.active::before {
+    content: '—';
+}
+
+/* Diagram Modal */
+.diagram-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.diagram-modal.active {
+    display: flex;
+}
+
+.diagram-modal iframe {
+    width: 90%;
+    height: 90%;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 2001;
+}
+
+.modal-close:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+
+/* Tablet & Small Desktop */
+@media (max-width: 1024px) {
+    .content {
+        padding: 3rem 3rem;
+    }
+
+    .card-preview {
+        height: 450px;
+    }
+}
+
+/* Mobile Devices */
 @media (max-width: 768px) {
     .app-container {
         flex-direction: column;
@@ -475,5 +677,27 @@ p {
     .nav-links {
         display: none;
         /* Mobile menu toggle logic would go here */
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .card-preview {
+        height: 350px;
+    }
+
+    .carousel-nav {
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+    }
+
+    .carousel-prev {
+        left: 8px;
+    }
+
+    .carousel-next {
+        right: 8px;
     }
 }
