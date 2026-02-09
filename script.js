@@ -210,7 +210,31 @@ document.addEventListener('DOMContentLoaded', () => {
             carouselContainer.style.opacity = opacity;
         });
 
-        // Trigger once on load in case it's already in view
         window.dispatchEvent(new Event('scroll'));
     }
+
+    // Sidebar Toggle Logic
+    const submenuToggles = document.querySelectorAll('.has-submenu > .nav-link');
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            // Allow default navigation (scrolling) to happen
+            // Just toggle the expanded state
+            const navItem = toggle.parentElement;
+            const wasExpanded = navItem.classList.contains('expanded');
+
+            // Accordion behavior: Close all other submenus
+            document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+                if (item !== navItem) {
+                    item.classList.remove('expanded');
+                }
+            });
+
+            // Toggle current one
+            if (wasExpanded) {
+                navItem.classList.remove('expanded');
+            } else {
+                navItem.classList.add('expanded');
+            }
+        });
+    });
 });
