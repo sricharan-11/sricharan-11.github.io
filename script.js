@@ -105,22 +105,54 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(section);
     });
 
-    // Intersection Observer for Entrance Animations
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: Stop observing once visible
-                // fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
+    // Scroll-Driven Animations: Linked to Scroll Speed
+    const scrollSections = document.querySelectorAll('.main-section');
 
-    mainSections.forEach(section => {
-        fadeObserver.observe(section);
+    function updateScrollAnimations() {
+        const windowHeight = window.innerHeight;
+
+        scrollSections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+
+            // Calculate how much of the section is visible from the bottom
+            // Range: 0 (just entering) to 1 (fully visible/past a certain point)
+            const distFromBottom = windowHeight - rect.top;
+
+            // Start animating when top enters viewport (35% from bottom - Shifted +15%)
+            const triggerPoint = windowHeight * 0.25;
+
+            // Fixed Duration: Use standard 65% of viewport
+            const animationLength = windowHeight * 0.65;
+
+            let progress = (distFromBottom - triggerPoint) / animationLength;
+
+            // Clamp progress
+            progress = Math.min(Math.max(progress, 0), 1);
+
+            // First section always visible
+            if (index === 0) progress = 1;
+
+            // Apply styles directly based on scroll position
+            // Reverted to 0.8 -> 1.0 scale (20% growth)
+            section.style.opacity = progress;
+            section.style.transform = `translateY(${(1 - progress) * 100}px) scale(${0.8 + (0.2 * progress)})`;
+        });
+    }
+
+    // optimizing scroll event with requestAnimationFrame
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateScrollAnimations();
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
 
-    // Smooth scroll handling (optional enhancement to CSS scroll-behavior)
+    // Initial call
+    updateScrollAnimations();
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -146,6 +178,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentIndex = 3; // Start at GCP LLD Sample 1 (index 3)
 
+    // Helper to load iframe for a specific index
+    function loadIframe(index) {
+        if (index < 0 || index >= cards.length) return;
+        const card = cards[index];
+        const iframe = card.querySelector('iframe.lazy-iframe');
+        if (iframe && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+            iframe.removeAttribute('data-src');
+            iframe.classList.remove('lazy-iframe');
+        }
+    }
+
     function updateCarousel() {
         if (!track) return;
 
@@ -163,7 +207,47 @@ document.addEventListener('DOMContentLoaded', () => {
         dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === currentIndex);
         });
+
+        // Ensure current slide is loaded (in case user navigates faster than auto-load)
+        loadIframe(currentIndex);
     }
+
+    // Staged Loading Logic: Website content first, then iframes
+    function loadStagedIframes() {
+        // 1. Load active slide immediately
+        loadIframe(currentIndex);
+
+        // 2. Load neighbors using requestIdleCallback for true non-blocking performance
+        // This ensures the browser only loads iframes when it's not busy (scrolling, animating, etc.)
+        const totalCards = cards.length;
+        const maxDist = Math.max(currentIndex, totalCards - 1 - currentIndex);
+        let dist = 1;
+
+        // Polyfill for Safari/older browsers
+        const scheduleWork = window.requestIdleCallback || function (cb) { setTimeout(cb, 300); };
+
+        function loadNextBatch() {
+            if (dist > maxDist) return;
+
+            loadIframe(currentIndex - dist);
+            loadIframe(currentIndex + dist);
+
+            dist++;
+
+            // Schedule next batch when browser is idle again
+            scheduleWork(loadNextBatch);
+        }
+
+        scheduleWork(loadNextBatch);
+    }
+
+    // Trigger staged loading only after the whole page is fully loaded
+    window.addEventListener('load', () => {
+        if (track) {
+            // Small buffer to ensure smooth initial render
+            setTimeout(loadStagedIframes, 500);
+        }
+    });
 
     // Initialize carousel at default position
     if (track) {
@@ -231,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Scroll-driven Zoom Animation for Carousel Container
+    // Scroll-driven Zoom Animation for Carousel Container - RESTORED
     const carouselContainer = document.querySelector('.carousel-container');
     if (carouselContainer) {
         window.addEventListener('scroll', () => {
