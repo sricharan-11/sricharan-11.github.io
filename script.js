@@ -3,28 +3,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link, .sub-link');
     const mainSections = document.querySelectorAll('.main-section');
 
-    // Hamburger Menu Toggle
-    const hamburgerBtn = document.getElementById('hamburger-btn');
-    const navLinksContainer = document.querySelector('.nav-links');
-    if (hamburgerBtn && navLinksContainer) {
-        hamburgerBtn.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('nav-open');
-            // Toggle icon between bars and X
-            const icon = hamburgerBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-xmark');
-        });
+    // Mobile Side Drawer Toggle
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const mobileHamburger = document.getElementById('mobile-hamburger-btn');
+    const sidebarHamburger = document.getElementById('hamburger-btn');
 
-        // Auto-close menu when a link is clicked (mobile UX)
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksContainer.classList.remove('nav-open');
-                const icon = hamburgerBtn.querySelector('i');
-                icon.classList.add('fa-bars');
-                icon.classList.remove('fa-xmark');
-            });
-        });
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add('nav-open');
+        if (backdrop) backdrop.classList.add('active');
     }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove('nav-open');
+        if (backdrop) backdrop.classList.remove('active');
+    }
+
+    // Mobile header hamburger opens the drawer
+    if (mobileHamburger) {
+        mobileHamburger.addEventListener('click', openSidebar);
+    }
+
+    // In-sidebar hamburger (X) closes the drawer
+    if (sidebarHamburger) {
+        sidebarHamburger.addEventListener('click', closeSidebar);
+    }
+
+    // Backdrop click closes the drawer
+    if (backdrop) {
+        backdrop.addEventListener('click', closeSidebar);
+    }
+
+    // Auto-close drawer when a sub-link or non-submenu link is clicked (mobile UX)
+    document.querySelectorAll('.nav-links .sub-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        });
+    });
+
+    // Non-submenu nav-links: close drawer and navigate immediately
+    document.querySelectorAll('.nav-item:not(.has-submenu) > .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        });
+    });
 
     // Intersection Observer for Scroll Spy
     const observerOptions = {
@@ -240,10 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const submenuToggles = document.querySelectorAll('.has-submenu > .nav-link');
     submenuToggles.forEach(toggle => {
         toggle.addEventListener('click', (e) => {
-            // Allow default navigation (scrolling) to happen
-            // Just toggle the expanded state
             const navItem = toggle.parentElement;
             const wasExpanded = navItem.classList.contains('expanded');
+            const isMobile = window.innerWidth <= 768;
 
             // Accordion behavior: Close all other submenus
             document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
@@ -252,11 +277,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Toggle current one
-            if (wasExpanded) {
-                navItem.classList.remove('expanded');
+            if (isMobile) {
+                if (!wasExpanded) {
+                    // First tap on mobile: expand submenu, prevent navigation
+                    e.preventDefault();
+                    navItem.classList.add('expanded');
+                } else {
+                    // Second tap on mobile: navigate and close drawer
+                    navItem.classList.remove('expanded');
+                    closeSidebar();
+                }
             } else {
-                navItem.classList.add('expanded');
+                // Desktop: just toggle expanded, always allow navigation
+                if (wasExpanded) {
+                    navItem.classList.remove('expanded');
+                } else {
+                    navItem.classList.add('expanded');
+                }
             }
         });
     });

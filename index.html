@@ -23,12 +23,21 @@
 <body>
 
     <div class="app-container">
+        <!-- Mobile Header Bar (visible only on mobile) -->
+        <div class="mobile-header">
+            <div class="logo"><span>Portfolio</span></div>
+            <button class="hamburger" id="mobile-hamburger-btn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Backdrop overlay for mobile sidebar -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
         <!-- Left Side Ribbon / Navigation -->
-        <nav class="sidebar">
+        <nav class="sidebar" id="sidebar">
             <div class="logo">
                 <span>Portfolio</span>
-                <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
-                    <i class="fas fa-bars"></i>
+                <button class="hamburger" id="hamburger-btn" aria-label="Close navigation">
+                    <i class="fas fa-xmark"></i>
                 </button>
             </div>
             <ul class="nav-links">
