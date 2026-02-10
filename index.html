@@ -27,6 +27,9 @@
         <nav class="sidebar">
             <div class="logo">
                 <span>Portfolio</span>
+                <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
             <ul class="nav-links">
                 <li class="nav-item has-submenu">
@@ -53,7 +56,13 @@
                         <li><a href="#education" class="sub-link">Education & Certifications</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a href="#blogs" class="nav-link">Blogs</a></li>
+                <li class="nav-item">
+                    <a href="#repos-blogs" class="nav-link">Repos & Blogs</a>
+                    <!-- <ul class="sub-nav">
+                        <li><a href="#repos" class="sub-link">Repos</a></li>
+                        <li><a href="#blogs" class="sub-link">Blogs</a></li>
+                    </ul> -->
+                </li>
                 <li class="nav-item"><a href="#inferences" class="nav-link">Inferences & Analogies</a></li>
                 <li class="nav-item"><a href="#resume-download" class="nav-link">Download Resume</a></li>
             </ul>
@@ -408,31 +417,68 @@
                 </div>
             </section>
 
-            <!-- Blogs Section -->
-            <section id="blogs" class="main-section">
-                <h1 class="section-title">Blogs</h1>
-                <div class="blog-grid">
-                    <article class="blog-card">
-                        <div class="blog-meta">Oct 14, 2024</div>
-                        <h3>Schedule snapshot backup of the GCP filestore instances</h3>
-                        <p>A guide on automating backups for point-in-time recovery.</p>
-                        <a href="https://medium.com/@sricharan.p99/schedule-snapshot-backup-of-the-gcp-filestore-instances-for-the-point-in-recovery-e1060c2579a0"
-                            target="_blank" class="read-more">Read More &rarr;</a>
-                    </article>
-                    <article class="blog-card">
-                        <div class="blog-meta">Oct 1, 2024</div>
-                        <h3>Auto-scale the GCP Cloud SQL read-replica</h3>
-                        <p>Optimizing database performance with auto-scaling strategies.</p>
-                        <a href="https://medium.com/@sricharan.p99/auto-scale-the-gcp-cloud-sql-read-replica-f1b9365a16a3"
-                            target="_blank" class="read-more">Read More &rarr;</a>
-                    </article>
-                    <article class="blog-card">
-                        <div class="blog-meta">Aug 25, 2024</div>
-                        <h3>Advice for CXOs of Product Startups</h3>
-                        <p>Governance and strategy checks for small to medium product-based startups.</p>
-                        <a href="https://medium.com/@sricharan.p99/if-you-are-a-cxo-of-a-small-medium-product-based-start-up-please-check-the-following-governing-cb06d1083362"
-                            target="_blank" class="read-more">Read More &rarr;</a>
-                    </article>
+            <!-- Repos & Blogs Section -->
+            <section id="repos-blogs" class="main-section">
+                <h1 class="section-title">Repos & Blogs</h1>
+
+                <div id="repos" class="sub-section">
+                    <h2>Repos</h2>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <div class="blog-meta">Go | Open Source</div>
+                            <h3>VM Idle Shutdown Agent</h3>
+                            <p>A lightweight agent for RHEL VMs that automatically shuts down idle virtual machines to
+                                save cloud costs. Monitors CPU usage and logged-in users.</p>
+                            <ul class="checklist">
+                                <li>One-line install via curl/wget</li>
+                                <li>Configurable CPU threshold and idle duration</li>
+                                <li>Runs as a systemd service</li>
+                            </ul>
+                            <a href="https://github.com/sricharan-11/vm-idle-shutdown" target="_blank"
+                                class="read-more">View on GitHub &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">TypeScript | Next.js + Gemini/Claude + PostgreSQL</div>
+                            <h3>NLP to SQL</h3>
+                            <p>A modern web application that converts natural language questions into SQL queries using
+                                AI and executes them against PostgreSQL databases.</p>
+                            <ul class="checklist">
+                                <li>Natural language to SQL with Gemini or Claude</li>
+                                <li>Schema explorer, clean results display</li>
+                                <li>SELECT-only safe execution with validation</li>
+                                <li>Dark theme, modern UI</li>
+                            </ul>
+                            <a href="https://github.com/sricharan-11/nlp-postgres" target="_blank"
+                                class="read-more">View on GitHub &rarr;</a>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="blogs" class="sub-section">
+                    <h2>Blogs</h2>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <div class="blog-meta">Oct 14, 2024</div>
+                            <h3>Schedule snapshot backup of the GCP filestore instances</h3>
+                            <p>A guide on automating backups for point-in-time recovery.</p>
+                            <a href="https://medium.com/@sricharan.p99/schedule-snapshot-backup-of-the-gcp-filestore-instances-for-the-point-in-recovery-e1060c2579a0"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">Oct 1, 2024</div>
+                            <h3>Auto-scale the GCP Cloud SQL read-replica</h3>
+                            <p>Optimizing database performance with auto-scaling strategies.</p>
+                            <a href="https://medium.com/@sricharan.p99/auto-scale-the-gcp-cloud-sql-read-replica-f1b9365a16a3"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">Aug 25, 2024</div>
+                            <h3>Advice for CXOs of Product Startups</h3>
+                            <p>Governance and strategy checks for small to medium product-based startups.</p>
+                            <a href="https://medium.com/@sricharan.p99/if-you-are-a-cxo-of-a-small-medium-product-based-start-up-please-check-the-following-governing-cb06d1083362"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                    </div>
                 </div>
             </section>
 

@@ -119,7 +119,28 @@ IIT Dharwad
 
 ---
 
-# Blogs
+# Repos & Blogs
+
+## Repos
+
+### VM Idle Shutdown Agent
+**Language:** Go | **License:** Open Source
+A lightweight agent for RHEL VMs that automatically shuts down idle virtual machines to save cloud costs. Monitors CPU usage and logged-in users — when both conditions are met for the configured duration, the VM is safely shut down.
+- One-line install via curl/wget
+- Configurable CPU threshold and idle duration
+- Runs as a systemd service
+[View on GitHub](https://github.com/sricharan-11/vm-idle-shutdown)
+
+### NLP to SQL
+**Language:** TypeScript | **Stack:** Next.js + Gemini/Claude + PostgreSQL
+A modern web application that converts natural language questions into SQL queries using AI and executes them against PostgreSQL databases.
+- Natural language to SQL with Gemini (primary) or Claude (fallback)
+- Schema explorer, clean results display
+- SELECT-only safe execution with validation
+- Dark theme, modern UI
+[View on GitHub](https://github.com/sricharan-11/nlp-postgres)
+
+## Blogs
 
 ### Schedule snapshot backup of the GCP filestore instances
 *Oct 14, 2024*

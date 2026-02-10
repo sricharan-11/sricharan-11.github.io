@@ -3,6 +3,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link, .sub-link');
     const mainSections = document.querySelectorAll('.main-section');
 
+    // Hamburger Menu Toggle
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinksContainer = document.querySelector('.nav-links');
+    if (hamburgerBtn && navLinksContainer) {
+        hamburgerBtn.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('nav-open');
+            // Toggle icon between bars and X
+            const icon = hamburgerBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
+        });
+
+        // Auto-close menu when a link is clicked (mobile UX)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('nav-open');
+                const icon = hamburgerBtn.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+            });
+        });
+    }
+
     // Intersection Observer for Scroll Spy
     const observerOptions = {
         root: null,
