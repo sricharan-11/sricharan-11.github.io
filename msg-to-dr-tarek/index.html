@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Message | Sri Charan</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Private message - password protected">
+
+    <!-- Google Fonts (matching main site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ── Design tokens (matching main site) ── */
+        :root {
+            --bg-color: #0f172a;
+            --sidebar-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --font-main: 'Outfit', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Password Overlay ── */
+        #password-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-color);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #password-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lock-container {
+            text-align: center;
+            max-width: 440px;
+            width: 90%;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05));
+            border: 2px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: var(--accent-color);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.25); }
+            50%      { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+        }
+
+        .lock-container h1 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .lock-container p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .password-field {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .password-field input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.2rem;
+            background: var(--sidebar-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .password-field input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+        }
+
+        .password-field input::placeholder {
+            color: rgba(148, 163, 184, 0.5);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: var(--accent-color);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(56, 189, 248, 0.4);
+        }
+
+        .unlock-btn:active {
+            transform: translateY(0);
+        }
+
+        .unlock-btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .error-msg {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 0.75rem;
+            min-height: 1.2em;
+            transition: opacity 0.3s;
+        }
+
+        .error-msg.shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%      { transform: translateX(-8px); }
+            75%      { transform: translateX(8px); }
+        }
+
+        /* ── Decrypted Content Area ── */
+        #content-area {
+            display: none;
+            max-width: 720px;
+            width: 90%;
+            margin: 3rem auto;
+            padding: 3rem;
+            animation: contentReveal 0.8s ease forwards;
+        }
+
+        @keyframes contentReveal {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+        .letter-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .letter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), #a78bfa, #f472b6);
+        }
+
+        /* ── Letter Styling ── */
+        .letter-header {
+            margin-bottom: 2rem;
+        }
+
+        .letter-to {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .letter-body p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .letter-body strong {
+            color: var(--text-primary);
+        }
+
+        .highlight-block {
+            background: rgba(56, 189, 248, 0.06);
+            border-left: 3px solid var(--accent-color);
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .note-block {
+            background: rgba(167, 139, 250, 0.06);
+            border-left: 3px solid #a78bfa;
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-radius: 0 10px 10px 0;
+            margin: 1.5rem 0;
+        }
+
+        .profile-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent-color);
+            transition: border-color 0.2s;
+        }
+
+        .profile-link:hover {
+            border-bottom-style: solid;
+        }
+
+        .side-note {
+            font-style: italic;
+            color: var(--text-secondary) !important;
+            opacity: 0.85;
+        }
+
+        .letter-footer {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .letter-footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .signature {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--accent-color) !important;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .letter-card { padding: 2rem 1.5rem; }
+            #content-area { padding: 1.5rem; }
+            .lock-container h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─── Password Gate ─── -->
+    <div id="password-overlay">
+        <div class="lock-container">
+            <div class="lock-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h1>Protected Message</h1>
+            <p>This content is private. Please enter the passphrase to continue.</p>
+            <form id="password-form" autocomplete="off">
+                <div class="password-field">
+                    <input type="password" id="password-input" placeholder="Enter passphrase" autofocus
+                        autocomplete="off" spellcheck="false">
+                    <button type="button" class="toggle-password" id="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <button type="submit" class="unlock-btn" id="unlock-btn">
+                    <i class="fas fa-unlock-alt"></i>&nbsp; Unlock
+                </button>
+            </form>
+            <div class="error-msg" id="error-msg"></div>
+        </div>
+    </div>
+
+    <!-- ─── Content (rendered after decryption) ─── -->
+    <div id="content-area">
+        <a href="https://sricharan-11.github.io" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Portfolio
+        </a>
+        <div class="letter-card" id="letter-card">
+            <!-- Decrypted content will be injected here -->
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        // ── Encrypted payload (AES-256-GCM + PBKDF2) ──
+        // Content cannot be read from source — it is only decryptable with the correct password.
+        const EP = {
+            "salt": "Owjp2VV5OlpptuFqmVdbKQ==",
+            "iv": "dOdDXCXBPRnsp9VM",
+            "ciphertext": "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",
+            "iterations": 600000
+        };
+
+        // ── DOM refs ──
+        const overlay   = document.getElementById('password-overlay');
+        const form      = document.getElementById('password-form');
+        const input     = document.getElementById('password-input');
+        const errorEl   = document.getElementById('error-msg');
+        const unlockBtn = document.getElementById('unlock-btn');
+        const toggleBtn = document.getElementById('toggle-password');
+        const content   = document.getElementById('content-area');
+        const letterEl  = document.getElementById('letter-card');
+
+        // ── Toggle password visibility ──
+        toggleBtn.addEventListener('click', () => {
+            const showing = input.type === 'text';
+            input.type = showing ? 'password' : 'text';
+            toggleBtn.querySelector('i').classList.toggle('fa-eye', showing);
+            toggleBtn.querySelector('i').classList.toggle('fa-eye-slash', !showing);
+            input.focus();
+        });
+
+        // ── Helpers ──
+        const b64ToUint8 = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+
+        async function deriveKey(password, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey(
+                'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
+            );
+            return crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: EP.iterations, hash: 'SHA-256' },
+                keyMaterial,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['decrypt']
+            );
+        }
+
+        async function decrypt(password) {
+            const salt = b64ToUint8(EP.salt);
+            const iv   = b64ToUint8(EP.iv);
+            const ct   = b64ToUint8(EP.ciphertext);
+            const key  = await deriveKey(password, salt);
+            const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+            return new TextDecoder().decode(plainBuf);
+        }
+
+        // ── Form submit ──
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const pw = input.value;
+            if (!pw) { showError('Please enter the passphrase.'); return; }
+
+            unlockBtn.disabled = true;
+            unlockBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Decrypting...';
+            errorEl.textContent = '';
+
+            try {
+                const html = await decrypt(pw);
+                // Success — render content
+                letterEl.innerHTML = html;
+                overlay.classList.add('hidden');
+                content.style.display = 'block';
+                document.body.style.alignItems = 'flex-start';
+            } catch {
+                showError('Incorrect passphrase. Please try again.');
+                unlockBtn.disabled = false;
+                unlockBtn.innerHTML = '<i class="fas fa-unlock-alt"></i>&nbsp; Unlock';
+                input.select();
+            }
+        });
+
+        function showError(msg) {
+            errorEl.textContent = msg;
+            errorEl.classList.remove('shake');
+            void errorEl.offsetWidth; // reflow
+            errorEl.classList.add('shake');
+        }
+
+        // ── Prevent viewing via DevTools tricks ──
+        // Block right-click context menu
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Keyboard shortcut blocking (F12, Ctrl+Shift+I/J/C, Ctrl+U)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12') e.preventDefault();
+            if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) e.preventDefault();
+            if (e.ctrlKey && ['U','u'].includes(e.key)) e.preventDefault();
+        });
+    })();
+    </script>
+</body>
+
+</html>
