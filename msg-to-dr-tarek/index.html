@@ -11,7 +11,9 @@
     <!-- Google Fonts (matching main site) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -30,8 +32,15 @@
             --font-heading: 'Space Grotesk', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: var(--font-main);
@@ -70,8 +79,15 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .lock-icon {
@@ -90,8 +106,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.25); }
-            50%      { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.25);
+            }
+
+            50% {
+                box-shadow: 0 0 0 12px rgba(56, 189, 248, 0);
+            }
         }
 
         .lock-container h1 {
@@ -194,9 +217,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25%      { transform: translateX(-8px); }
-            75%      { transform: translateX(8px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-8px);
+            }
+
+            75% {
+                transform: translateX(8px);
+            }
         }
 
         /* ── Decrypted Content Area ── */
@@ -210,8 +243,15 @@
         }
 
         @keyframes contentReveal {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .back-link {
@@ -325,9 +365,17 @@
 
         /* ── Responsive ── */
         @media (max-width: 600px) {
-            .letter-card { padding: 2rem 1.5rem; }
-            #content-area { padding: 1.5rem; }
-            .lock-container h1 { font-size: 1.4rem; }
+            .letter-card {
+                padding: 2rem 1.5rem;
+            }
+
+            #content-area {
+                padding: 1.5rem;
+            }
+
+            .lock-container h1 {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
@@ -346,7 +394,8 @@
                 <div class="password-field">
                     <input type="password" id="password-input" placeholder="Enter passphrase" autofocus
                         autocomplete="off" spellcheck="false">
-                    <button type="button" class="toggle-password" id="toggle-password" aria-label="Toggle password visibility">
+                    <button type="button" class="toggle-password" id="toggle-password"
+                        aria-label="Toggle password visibility">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -369,106 +418,106 @@
     </div>
 
     <script>
-    (() => {
-        'use strict';
+        (() => {
+            'use strict';
 
-        // ── Encrypted payload (AES-256-GCM + PBKDF2) ──
-        // Content cannot be read from source — it is only decryptable with the correct password.
-        const EP = {
-            "salt": "AHP5keTFcfukZpFTDcxTHg==",
-            "iv": "2tscNa5p7o/505fq",
-            "ciphertext": "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",
-            "iterations": 600000
-        };
+            // ── Encrypted payload (AES-256-GCM + PBKDF2) ──
+            // Content cannot be read from source — it is only decryptable with the correct password.
+            const EP = {
+                "salt": "kc2D8XSx4CO2jpYdRr/ksA==",
+                "iv": "CxgREK7gSUj2zGZz",
+                "ciphertext": "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",
+                "iterations": 600000
+            };
 
-        // ── DOM refs ──
-        const overlay   = document.getElementById('password-overlay');
-        const form      = document.getElementById('password-form');
-        const input     = document.getElementById('password-input');
-        const errorEl   = document.getElementById('error-msg');
-        const unlockBtn = document.getElementById('unlock-btn');
-        const toggleBtn = document.getElementById('toggle-password');
-        const content   = document.getElementById('content-area');
-        const letterEl  = document.getElementById('letter-card');
+            // ── DOM refs ──
+            const overlay = document.getElementById('password-overlay');
+            const form = document.getElementById('password-form');
+            const input = document.getElementById('password-input');
+            const errorEl = document.getElementById('error-msg');
+            const unlockBtn = document.getElementById('unlock-btn');
+            const toggleBtn = document.getElementById('toggle-password');
+            const content = document.getElementById('content-area');
+            const letterEl = document.getElementById('letter-card');
 
-        // ── Toggle password visibility ──
-        toggleBtn.addEventListener('click', () => {
-            const showing = input.type === 'text';
-            input.type = showing ? 'password' : 'text';
-            toggleBtn.querySelector('i').classList.toggle('fa-eye', showing);
-            toggleBtn.querySelector('i').classList.toggle('fa-eye-slash', !showing);
-            input.focus();
-        });
+            // ── Toggle password visibility ──
+            toggleBtn.addEventListener('click', () => {
+                const showing = input.type === 'text';
+                input.type = showing ? 'password' : 'text';
+                toggleBtn.querySelector('i').classList.toggle('fa-eye', showing);
+                toggleBtn.querySelector('i').classList.toggle('fa-eye-slash', !showing);
+                input.focus();
+            });
 
-        // ── Helpers ──
-        const b64ToUint8 = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+            // ── Helpers ──
+            const b64ToUint8 = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
 
-        async function deriveKey(password, salt) {
-            const enc = new TextEncoder();
-            const keyMaterial = await crypto.subtle.importKey(
-                'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
-            );
-            return crypto.subtle.deriveKey(
-                { name: 'PBKDF2', salt, iterations: EP.iterations, hash: 'SHA-256' },
-                keyMaterial,
-                { name: 'AES-GCM', length: 256 },
-                false,
-                ['decrypt']
-            );
-        }
-
-        async function decrypt(password) {
-            const salt = b64ToUint8(EP.salt);
-            const iv   = b64ToUint8(EP.iv);
-            const ct   = b64ToUint8(EP.ciphertext);
-            const key  = await deriveKey(password, salt);
-            const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
-            return new TextDecoder().decode(plainBuf);
-        }
-
-        // ── Form submit ──
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const pw = input.value;
-            if (!pw) { showError('Please enter the passphrase.'); return; }
-
-            unlockBtn.disabled = true;
-            unlockBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Decrypting...';
-            errorEl.textContent = '';
-
-            try {
-                const html = await decrypt(pw);
-                // Success — render content
-                letterEl.innerHTML = html;
-                overlay.classList.add('hidden');
-                content.style.display = 'block';
-                document.body.style.alignItems = 'flex-start';
-            } catch {
-                showError('Incorrect passphrase. Please try again.');
-                unlockBtn.disabled = false;
-                unlockBtn.innerHTML = '<i class="fas fa-unlock-alt"></i>&nbsp; Unlock';
-                input.select();
+            async function deriveKey(password, salt) {
+                const enc = new TextEncoder();
+                const keyMaterial = await crypto.subtle.importKey(
+                    'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
+                );
+                return crypto.subtle.deriveKey(
+                    { name: 'PBKDF2', salt, iterations: EP.iterations, hash: 'SHA-256' },
+                    keyMaterial,
+                    { name: 'AES-GCM', length: 256 },
+                    false,
+                    ['decrypt']
+                );
             }
-        });
 
-        function showError(msg) {
-            errorEl.textContent = msg;
-            errorEl.classList.remove('shake');
-            void errorEl.offsetWidth; // reflow
-            errorEl.classList.add('shake');
-        }
+            async function decrypt(password) {
+                const salt = b64ToUint8(EP.salt);
+                const iv = b64ToUint8(EP.iv);
+                const ct = b64ToUint8(EP.ciphertext);
+                const key = await deriveKey(password, salt);
+                const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+                return new TextDecoder().decode(plainBuf);
+            }
 
-        // ── Prevent viewing via DevTools tricks ──
-        // Block right-click context menu
-        document.addEventListener('contextmenu', (e) => e.preventDefault());
+            // ── Form submit ──
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const pw = input.value;
+                if (!pw) { showError('Please enter the PIN.'); return; }
 
-        // Keyboard shortcut blocking (F12, Ctrl+Shift+I/J/C, Ctrl+U)
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12') e.preventDefault();
-            if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) e.preventDefault();
-            if (e.ctrlKey && ['U','u'].includes(e.key)) e.preventDefault();
-        });
-    })();
+                unlockBtn.disabled = true;
+                unlockBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Decrypting...';
+                errorEl.textContent = '';
+
+                try {
+                    const html = await decrypt(pw);
+                    // Success — render content
+                    letterEl.innerHTML = html;
+                    overlay.classList.add('hidden');
+                    content.style.display = 'block';
+                    document.body.style.alignItems = 'flex-start';
+                } catch {
+                    showError('Incorrect PIN. Please try again.');
+                    unlockBtn.disabled = false;
+                    unlockBtn.innerHTML = '<i class="fas fa-unlock-alt"></i>&nbsp; Unlock';
+                    input.select();
+                }
+            });
+
+            function showError(msg) {
+                errorEl.textContent = msg;
+                errorEl.classList.remove('shake');
+                void errorEl.offsetWidth; // reflow
+                errorEl.classList.add('shake');
+            }
+
+            // ── Prevent viewing via DevTools tricks ──
+            // Block right-click context menu
+            document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            // Keyboard shortcut blocking (F12, Ctrl+Shift+I/J/C, Ctrl+U)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'F12') e.preventDefault();
+                if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) e.preventDefault();
+                if (e.ctrlKey && ['U', 'u'].includes(e.key)) e.preventDefault();
+            });
+        })();
     </script>
 </body>
 
