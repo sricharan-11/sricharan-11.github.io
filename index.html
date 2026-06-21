@@ -4,521 +4,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Message | Sri Charan</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="description" content="Private message - password protected">
+    <title>Pentapati Sri Charan | Senior Architect</title>
+    <meta name="description"
+        content="Portfolio of Pentapati Sri Charan - Senior Architect specializing in GCP, Azure, Cloud Transformation, and Agentic AI.">
 
-    <!-- Google Fonts (matching main site) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600&display=swap"
         rel="stylesheet">
-    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="styles.css?v=1.0">
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* ── Design tokens (matching main site) ── */
-        :root {
-            --bg-color: #0f172a;
-            --sidebar-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --card-bg: #1e293b;
-            --border-color: #334155;
-            --font-main: 'Outfit', sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.7;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ── Password Overlay ── */
-        #password-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-color);
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        #password-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .lock-container {
-            text-align: center;
-            max-width: 440px;
-            width: 90%;
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .lock-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.05));
-            border: 2px solid rgba(56, 189, 248, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2rem;
-            color: var(--accent-color);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.25);
-            }
-
-            50% {
-                box-shadow: 0 0 0 12px rgba(56, 189, 248, 0);
-            }
-        }
-
-        .lock-container h1 {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .lock-container p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-
-        .password-field {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
-        .password-field input {
-            width: 100%;
-            padding: 1rem 3rem 1rem 1.2rem;
-            background: var(--sidebar-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .password-field input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
-        }
-
-        .password-field input::placeholder {
-            color: rgba(148, 163, 184, 0.5);
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
-            transition: color 0.2s;
-        }
-
-        .toggle-password:hover {
-            color: var(--accent-color);
-        }
-
-        .unlock-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.15s ease, box-shadow 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        .unlock-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px -5px rgba(56, 189, 248, 0.4);
-        }
-
-        .unlock-btn:active {
-            transform: translateY(0);
-        }
-
-        .unlock-btn:disabled {
-            opacity: 0.6;
-            cursor: wait;
-        }
-
-        .error-msg {
-            color: #f87171;
-            font-size: 0.85rem;
-            margin-top: 0.75rem;
-            min-height: 1.2em;
-            transition: opacity 0.3s;
-        }
-
-        .error-msg.shake {
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-8px);
-            }
-
-            75% {
-                transform: translateX(8px);
-            }
-        }
-
-        /* ── Decrypted Content Area ── */
-        #content-area {
-            display: none;
-            max-width: 720px;
-            width: 90%;
-            margin: 3rem auto;
-            padding: 3rem;
-            animation: contentReveal 0.8s ease forwards;
-        }
-
-        @keyframes contentReveal {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--accent-color);
-        }
-
-        .letter-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .letter-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), #a78bfa, #f472b6);
-        }
-
-        /* ── Letter Styling ── */
-        .letter-header {
-            margin-bottom: 2rem;
-        }
-
-        .letter-to {
-            font-family: var(--font-heading);
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .letter-body p {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .letter-body strong {
-            color: var(--text-primary);
-        }
-
-        .highlight-block {
-            background: rgba(56, 189, 248, 0.06);
-            border-left: 3px solid var(--accent-color);
-            padding: 1.5rem 1.5rem 0.5rem;
-            border-radius: 0 10px 10px 0;
-            margin: 1.5rem 0;
-        }
-
-        .note-block {
-            background: rgba(167, 139, 250, 0.06);
-            border-left: 3px solid #a78bfa;
-            padding: 1.5rem 1.5rem 0.5rem;
-            border-radius: 0 10px 10px 0;
-            margin: 1.5rem 0;
-        }
-
-        .profile-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px dashed var(--accent-color);
-            transition: border-color 0.2s;
-        }
-
-        .profile-link:hover {
-            border-bottom-style: solid;
-        }
-
-        .side-note {
-            font-style: italic;
-            color: var(--text-secondary) !important;
-            opacity: 0.85;
-        }
-
-        .letter-footer {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .letter-footer p {
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-        }
-
-        .signature {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--accent-color) !important;
-        }
-
-        /* ── Responsive ── */
-        @media (max-width: 600px) {
-            .letter-card {
-                padding: 2rem 1.5rem;
-            }
-
-            #content-area {
-                padding: 1.5rem;
-            }
-
-            .lock-container h1 {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <!-- ─── Password Gate ─── -->
-    <div id="password-overlay">
-        <div class="lock-container">
-            <div class="lock-icon">
-                <i class="fas fa-lock"></i>
-            </div>
-            <h1>Protected Message</h1>
-            <p>This content is private. Please enter the passphrase to continue.</p>
-            <form id="password-form" autocomplete="off">
-                <div class="password-field">
-                    <input type="password" id="password-input" placeholder="Enter passphrase" autofocus
-                        autocomplete="off" spellcheck="false">
-                    <button type="button" class="toggle-password" id="toggle-password"
-                        aria-label="Toggle password visibility">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </div>
-                <button type="submit" class="unlock-btn" id="unlock-btn">
-                    <i class="fas fa-unlock-alt"></i>&nbsp; Unlock
+    <div class="app-container">
+        <!-- Mobile Header Bar (visible only on mobile) -->
+        <div class="mobile-header">
+            <div class="logo"><span>Portfolio</span></div>
+            <button class="hamburger" id="mobile-hamburger-btn" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Backdrop overlay for mobile sidebar -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+        <!-- Left Side Ribbon / Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <span>Portfolio</span>
+                <button class="hamburger" id="hamburger-btn" aria-label="Close navigation">
+                    <i class="fas fa-xmark"></i>
                 </button>
-            </form>
-            <div class="error-msg" id="error-msg"></div>
-        </div>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item has-submenu">
+                    <a href="#introduction" class="nav-link">Introduction</a>
+                    <ul class="sub-nav">
+                        <li><a href="#quick-intro" class="sub-link">Quick Intro</a></li>
+                        <li><a href="#achievements" class="sub-link">Achievements</a></li>
+                        <li><a href="#long-intro" class="sub-link">Long Intro</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a href="#architecture" class="nav-link">EA Corner</a>
+                    <ul class="sub-nav">
+                        <li><a href="#arch-dos" class="sub-link">DOs</a></li>
+                        <li><a href="#arch-donts" class="sub-link">DON'Ts</a></li>
+                        <li><a href="#arch-artifacts" class="sub-link">Architectural Artifacts</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a href="#resume" class="nav-link">Resume</a>
+                    <ul class="sub-nav">
+                        <li><a href="#experience" class="sub-link">Professional Experience</a></li>
+                        <li><a href="#skills" class="sub-link">Skills</a></li>
+                        <li><a href="#education" class="sub-link">Education & Certifications</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#repos-blogs" class="nav-link">Repos & Blogs</a>
+                    <!-- <ul class="sub-nav">
+                        <li><a href="#repos" class="sub-link">Repos</a></li>
+                        <li><a href="#blogs" class="sub-link">Blogs</a></li>
+                    </ul> -->
+                </li>
+                <li class="nav-item"><a href="#inferences" class="nav-link">Inferences & Analogies</a></li>
+                <li class="nav-item"><a href="#resume-download" class="nav-link">Download Resume</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+
+            <!-- Introduction Section -->
+            <section id="introduction" class="main-section">
+                <h1 class="section-title">Introduction</h1>
+
+                <div id="quick-intro" class="sub-section">
+                    <h2>Quick Intro</h2>
+                    <div class="profile-card">
+                        <h3>Pentapati Sri Charan</h3>
+                        <p class="role">Senior Architect</p>
+                        <p class="bio">An evolving individual driven by the strong belief that yesterday's experiences and continuous learning are the non-negotiable foundations of today's excellence.</p>
+                        <p class="bio">Probably one of very few in the world with whom you can have a meaningful conversation about anything ranging from the Palo Alto loopback interface to mHC of DeepSeek v4, from eruption of TOBA to starlink's next move.</p>
+                        <p class="bio">Passionate in building enterprise systems from ground up with multi-lens approach. I specialize in digitalization and strategic design thinking. I bridge the gap between complex technical requirements and executive strategy, creating scalable systems that align with long-term visions.</p>
+
+                        <div class="contact-info">
+                            <a href="mailto:sricharan.p99@gmail.com"><i class="fas fa-envelope"></i></a>
+                                <!--                                sricharan.p99@gmail.com</a> -->
+                                <!--                            <a href="tel:+966596863719"><i class="fas fa-phone"></i> +966-596863719</a> -->
+                                <div class="social-links">
+                                    <a href="https://linkedin.com/in/sri-charan11" target="_blank"><i
+                                            class="fab fa-linkedin"></i> LinkedIn</a>
+                                    <a href="https://github.com/sricharan-11" target="_blank"><i
+                                            class="fab fa-github"></i> GitHub</a>
+                                    <a href="https://medium.com/@sricharan.p99" target="_blank"><i
+                                            class="fab fa-medium"></i> Medium</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="achievements" class="sub-section">
+                    <h2>Achievements</h2>
+                    <div class="card-grid">
+                        <div class="card">
+                            <h3><i class="fas fa-trophy" style="color: #fbbf24;"></i> Google Solutioning All Star</h3>
+                            <p>Recognized as <strong>All Star, Solution Engineering</strong> by <strong>Google
+                                    Cloud</strong>
+                                in 2023.</p>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-award" style="color: #f472b6;"></i> iSolution Recognition</h3>
+                            <p>Awardee of Annual Tech Efficiency Award (2024) & recipient of CEO's
+                                Appreciation letter (2025).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="long-intro" class="sub-section">
+                    <h2>Long Introduction</h2>
+                    <p>My professional journey is defined by a relentless pursuit of architectural excellence and
+                        operational efficiency. I have solutioned, led, and implemented innovative digital transformation
+                        projects solving complex business problems and accounting for growth. From architecting Landing
+                        Zones with high-availability NVAs to implementing cloud-native spokes with Kubernetes and
+                        ArgoCD, I ensure security and compliance are never afterthoughts.</p>
+                    <p>I believe in the power of "Technology as Gardening"—constant pruning and care. Whether it's
+                        revamping
+                        technical strategies for multi-cloud environments or leading engineering teams with personalized
+                        guidance, my goal is always to create captivating outcomes via predictive analysis and strategic
+                        advocations.</p>
+                    <p>I am seeking an environment with openness for ideas, new perspectives, and room for
+                        cross-functional learning and ample growth.</p>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="main-section">
+                <h1 class="section-title">EA Corner</h1>
+
+                <div id="arch-dos" class="sub-section">
+                    <h2>DOs</h2>
+                    <ul class="checklist do-list">
+                        <li><strong>Keep it Simple:</strong> Great architecture is not the complex one, but a simple one
+                            that fits the scenario</li>
+                        <li><strong>Document Decisions:</strong> ADRs are vital. Standardize delivery/changes procedures
+                            for audit compliance.</li>
+                        <li><strong>Define Priorities:</strong> There's no ideal technology that would ever exist,
+                            choose the stack that caters to your priorities.</li>
+                        <li><strong>Design for Failure:</strong> Always assume components/processes will fail and build
+                            resilience
+                            (BCDR Strategies).</li>
+                        <li><strong>RTDT:</strong> Better to Read The Document Twice, than to implement it wrong the
+                            first time.</li>
+                        <li><strong>Save Compute:</strong> Save Environment.</li>
+                    </ul>
+                </div>
+
+                <div id="arch-donts" class="sub-section">
+                    <h2>DON'Ts</h2>
+                    <ul class="checklist dont-list">
+                        <li><strong>Don't Design without Objectives:</strong> There is no right or wrong way to design
+                            in this world, but there are right ways to design for achieving specific objectives.</li>
+                        <li><strong>Don't Over Engineer:</strong> If your simple monolith has no tangible benefits from
+                            adopting microservices, forget it. Any fancy tech for peer pressure is a waste of time, when
+                            not associated with a tangible benefits.</li>
+                        <li><strong>Don't Reinvent the Wheel:</strong> until unless you are the wheel manufacturer.</li>
+                        <li><strong>Don't Automate Everything:</strong> If it's not repeated manually more than 3 times,
+                            don't automate it.</li>
+                        <li><strong>Don't Optimize Prematurely:</strong> Measure first, ensure you are optimizing the
+                            right bottlenecks.</li>
+                        <li><strong>Don't Couple Tightly:</strong> Loose coupling allows independent evolution, like my
+                            microservices adoption.</li>
+                        <li><strong>Don't Start without a Don't List:</strong> Scope sprawl, technology sprawl, budget
+                            sprawl are inevitable when the boundaries aren't set prior.</li>
+                    </ul>
+                </div>
+
+                <div id="arch-artifacts" class="sub-section">
+                    <h2>Architectural Artifacts</h2>
+                    <p class="diagram-intro">Navigate through my architectural artifacts - fully interactive with pan
+                        and
+                        zoom</p>
+
+                    <!-- Carousel Container -->
+                    <div class="carousel-container">
+                        <div class="carousel-viewport">
+                            <button class="carousel-nav carousel-prev" aria-label="Previous">&#10094;</button>
+                            <div class="carousel-track">
+                                <div class="carousel-card" data-page="0">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-Foundation%20Sample%201.drawio.html"
+                                            class="lazy-iframe" loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">Foundation Sample 1</div>
+                                </div>
+                                <div class="carousel-card" data-page="1">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-Foundation%20Sample%202.drawio.html"
+                                            class="lazy-iframe" loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">Foundation Sample 2</div>
+                                </div>
+                                <div class="carousel-card" data-page="2">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-Foundation%20Sample%203.drawio.html"
+                                            class="lazy-iframe" loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">Foundation Sample 3</div>
+                                </div>
+                                <div class="carousel-card" data-page="3">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-GCP%20LLD%20Sample%201.drawio.html" class="lazy-iframe"
+                                            loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">GCP LLD Sample 1</div>
+                                </div>
+                                <div class="carousel-card" data-page="4">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-GCP%20LLD%20Sample%202.drawio.html" class="lazy-iframe"
+                                            loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">GCP LLD Sample 2</div>
+                                </div>
+                                <div class="carousel-card" data-page="5">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-TF-tree-GitOps.drawio.html" class="lazy-iframe"
+                                            loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">TF-Tree-GitOps</div>
+                                </div>
+                                <div class="carousel-card" data-page="6">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-GKE%20Sample%201.drawio.html" class="lazy-iframe"
+                                            loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">GKE Sample 1</div>
+                                </div>
+                                <div class="carousel-card" data-page="7">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-Project%20Depiction%20LLD%201.drawio.html"
+                                            class="lazy-iframe" loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">Project Depiction LLD 1</div>
+                                </div>
+                                <div class="carousel-card" data-page="8">
+                                    <div class="card-preview">
+                                        <iframe data-src="Sample-Shared%20VPC%20Conceptual.drawio.html"
+                                            class="lazy-iframe" loading="lazy"></iframe>
+                                    </div>
+                                    <div class="card-label">Shared VPC Conceptual</div>
+                                </div>
+                            </div>
+                            <button class="carousel-nav carousel-next" aria-label="Next">&#10095;</button>
+                        </div>
+                    </div>
+
+                    <!-- Slide Indicators -->
+                    <div class="carousel-dots">
+                        <span class="dot" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <span class="dot" data-index="2"></span>
+                        <span class="dot active" data-index="3"></span>
+                        <span class="dot" data-index="4"></span>
+                        <span class="dot" data-index="5"></span>
+                        <span class="dot" data-index="6"></span>
+                        <span class="dot" data-index="7"></span>
+                        <span class="dot" data-index="8"></span>
+                    </div>
+                </div>
+
+                <!-- Diagram Modal -->
+                <div id="diagram-modal" class="diagram-modal">
+                    <button class="modal-close" aria-label="Close">&times;</button>
+                    <iframe id="modal-iframe" src="" title="Diagram Full View"></iframe>
+                </div>
+            </section>
+
+            <!-- Resume Section -->
+            <section id="resume" class="main-section">
+                <h1 class="section-title">Resume</h1>
+                <div class="resume-container">
+
+                    <div id="experience" class="sub-section">
+                        <h2>Professional Experience</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-date">Aug 2025 – Present</div>
+                                <div class="timeline-content">
+                                    <h3>Senior Consultant - Platform Design</h3>
+                                    <h4>ELM (Emdad by ELM's on-roll) | Riyadh</h4>
+                                    <ul class="job-details">
+                                        <li>Revamping the technical strategy and integrating multiple sites under hybrid multi-cloud
+                                            approaches, enforcing the ring pattern for high criticality and mesh for low criticality
+                                            environments.</li>
+                                        <li>Strategizing the unification of fragmented functional units under one
+                                            umbrella.</li>
+                                        <li>Enhancing the IaC blocks to be modular, reusable and perpetuating to the next stage.</li>
+                                        <li>Experimenting an agentic AI assisted engineering for the unit (inspired by OpenClaw, building it lean towards cloud infra engineering), over Docker for isolation enabling multi-tenancy:
+                                            <ul class="job-details">
+                                                <li>The smart gateway routes to agents like cloud_engg., os_engg., which have shell execution access and are inter-orchestrated in ReAct loop with safety being flagged by the security_agent, with each interaction state being managed by LangGraph.</li>
+                                                <li>The STM/LTM are stored in SQLite/SQLite_Vec respectively, enabled with contextual RAG.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item no-dot">
+                                <div class="timeline-date">May 2024 – Aug 2025</div>
+                                <div class="timeline-content">
+                                    <h4>(Cloud Solution Architect - iSolution x ELM) | Remote</h4>
+                                    <ul class="job-details">
+                                        <li>Architected the Cloud, AI and DevOps transformation projects for Saudi/Qatari Government/Corporate enterprises, whose consumption are beyond $3M ARR.</li>
+                                        <li>Created a semantic layer over the dashboard for databases, that can fetch the desired data and visual representation when queried in plain English, reducing TTR by 4-16hrs for new queries.</li>
+                                        <li>Chosen as Lead Architect at ELM for chalking the complete Cloud Adoption and GitOps integration strategy. Solely designed and implemented the same, with framework-pillars being agility, scaling, cost centricity, NCA/SAMA compliance, reliability and cloud native sustainability.</li>
+                                        <li><strong>Foundation:</strong> Built with strong Governance & Finops control policies at inception, with layered architecture, organization policies enforcement, BU divisions, IAM deny policies, ensuring no single bad actor can cause large scale adversity or limiting the blast radius.</li>
+                                        <li><strong>Landing Zone Hub:</strong> Equipped with highly available NVAs. Ingress/egress traffic controlled with North-South, East-West NGFWs with a bridging WAF, complying with 85% of NCA ECC CCC security controls by enforcing tailored and advanced security profiling.</li>
+                                        <li><strong>Spokes:</strong> Each spoke defined by a shared VPC for lower critical environments and standalone VPC for higher critical environments. Individually divided to cater legacy re-hosted operations and modernized CNCF GitOps practices, reducing friction of adoption by normalizing readiness levels.</li>
+                                        <li><strong>Shared Services:</strong> Organization-wide GRC control, management and data protection tools instilled in dedicated zones, serving as the central management, logging, monitoring and observability centre.</li>
+                                        <li>Functioned as advisory Architect for other premium key-clients like SAB, Qatar Fin. Centre Reg. Authority, National Center for Waste Mgmt., Thiqah (now acquired by ELM), Dammam Airports — ensuring relevant best practices are being followed by solutioning and delivery teams.</li>
+                                        <li>Devised a zero-day CVE tolerant business continuity strategy for the landing zones.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">Oct 2021 – Feb 2024</div>
+                                <div class="timeline-content">
+                                    <h3>Solution Architect, Engineering Lead</h3>
+                                    <h4>Shivaami Cloud Services | Mumbai</h4>
+                                    <ul class="job-details">
+                                        <li>Started as an engineer and was promoted soon to lead a 10-member team of Cloud DevOps,
+                                            FinOps and Development pods with personalized guidance, emphasizing
+                                            self-sustainability and operational efficiency.</li>
+                                        <li>Architected and implemented cloud modernization, migration & BCDR strategies
+                                            according to customers' requirements ranging from Fin-tech to Healthcare clients on GCP, Azure and AWS.</li>
+                                        <li>Spearheaded South India's largest NBFC's GCP project making the systems dynamically scalable
+                                            through micro-services adoption achieving 20% cost savings. Optimized SDLC through cloud-native services adoption and environment automations.</li>
+                                        <li>Initiated value-addition strategies for selected key clients, increasing customer
+                                            stickiness and improving retention by over 50%. This effort also served as a promoter index, boosting the revenue streams and contributing 5% of net new revenue.
+                                        </li>
+                                        <li>Collaborated with CXOs to standardize delivery procedures ensuring audit
+                                            compliances and designed OKRs for impact measurement. This streamlining facilitated a hassle-free 175%
+                                            growth in business.</li>
+                                        <li>Led the vendor-relations, re-negotiated the margins by bagging at least additional 3% per vendor.</li>
+                                        <li>As a part-time product owner, adopted MoSCoW framework and mapped the user persona, altered
+                                            the product features, improving the users' interaction experience.</li>
+                                        <li>Initiated hosting of internal knowledge-sharing sessions over new technologies and industrial best
+                                            practices and enabled the cloud engineering team over the basics of Containers, Docker, Kubernetes, AVDs.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">Previous Experience</div>
+                                <div class="timeline-content">
+                                    <h3>Azure Implementation Specialist</h3>
+                                    <h4>G7CR Technologies | Bangalore</h4>
+                                    <ul class="job-details">
+                                        <li>As part of the tech evangelist team, actively explored new Azure releases to
+                                            create innovative and elegant integrations for business purposes.</li>
+                                        <li>Transformed a fintech infrastructure on Azure swiftly, delivering a
+                                            remarkable experience and establishing a new organizational benchmark.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="skills" class="sub-section">
+                        <h2>Skills</h2>
+                        <div class="card-grid">
+                            <div class="card">
+                                <h3>Cloud Platforms</h3>
+                                <p>GCP, Azure, AWS</p>
+                            </div>
+                            <div class="card">
+                                <h3>Solutioning</h3>
+                                <p>Landing Zone with NVAs, Foundation Compliance & Governance, Automation, HLD/LLD, Strategy, Transformation, BCDR</p>
+                            </div>
+                            <div class="card">
+                                <h3>GitOps</h3>
+                                <p>Git, Terraform, KCC, ARM</p>
+                            </div>
+                            <div class="card">
+                                <h3>DevSecOps</h3>
+                                <p>Docker, Kubernetes, Staged CI/CD, Snyk</p>
+                            </div>
+                            <div class="card">
+                                <h3>OS & Scripting</h3>
+                                <p>Linux & Shell, Cloud CLI, Python</p>
+                            </div>
+                            <div class="card">
+                                <h3>Agentic AI</h3>
+                                <p>Contextual RAG, LangGraph, ReACT, HITL, MCP</p>
+                            </div>
+                            <div class="card">
+                                <h3>Platform for AI</h3>
+                                <p>Ollama, vLLM</p>
+                            </div>
+                            <div class="card">
+                                <h3>Soft Skills</h3>
+                                <p>Responsibility, Team Enablement, Adaptability, Eloquence, Quick Grasping</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="education" class="sub-section">
+                        <h2>Education & Certifications</h2>
+                        <div class="card-grid">
+                            <div class="card">
+                                <h3>Education</h3>
+                                <p><strong>B. Tech.</strong><br>IIT Dharwad</p>
+                            </div>
+                            <div class="card">
+                                <h3>Certifications</h3>
+                                <ul class="checklist">
+                                    <li>Professional Cloud Architect (Google)</li>
+                                    <li>Azure Solutions Architect Expert (Microsoft)</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Repos & Blogs Section -->
+            <section id="repos-blogs" class="main-section">
+                <h1 class="section-title">Repos & Blogs</h1>
+
+                <div id="repos" class="sub-section">
+                    <h2>Repos</h2>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <div class="blog-meta">Go | Open Source</div>
+                            <h3>VM Idle Shutdown Agent</h3>
+                            <p>A lightweight agent for RHEL VMs that automatically shuts down idle virtual machines to
+                                save cloud costs. Monitors CPU, Disk I/O, Network usage and logged-in users.</p>
+                            <ul class="checklist">
+                                <li>One-line install via curl/wget</li>
+                                <li>Configurable CPU threshold and idle duration</li>
+                                <li>Runs as a systemd service</li>
+                            </ul>
+                            <a href="https://github.com/sricharan-11/vm-idle-shutdown" target="_blank"
+                                class="read-more">View on GitHub &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">TypeScript | Next.js + Gemini/Claude + PostgreSQL</div>
+                            <h3>NLP to SQL</h3>
+                            <p>A modern web application that converts natural language questions into SQL queries using
+                                AI and executes them against PostgreSQL databases.</p>
+                            <ul class="checklist">
+                                <li>Natural language to SQL with Gemini or Claude</li>
+                                <li>Schema explorer, clean results display</li>
+                                <li>SELECT-only safe execution with validation</li>
+                                <li>Dark theme, modern UI</li>
+                            </ul>
+                            <a href="https://github.com/sricharan-11/nlp-postgres" target="_blank"
+                                class="read-more">View on GitHub &rarr;</a>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="blogs" class="sub-section">
+                    <h2>Blogs</h2>
+                    <div class="blog-grid">
+                        <article class="blog-card">
+                            <div class="blog-meta">Oct 14, 2024</div>
+                            <h3>Schedule snapshot backup of the GCP filestore instances</h3>
+                            <p>A guide on automating backups for point-in-time recovery.</p>
+                            <a href="https://medium.com/@sricharan.p99/schedule-snapshot-backup-of-the-gcp-filestore-instances-for-the-point-in-recovery-e1060c2579a0"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">Oct 1, 2024</div>
+                            <h3>Auto-scale the GCP Cloud SQL read-replica</h3>
+                            <p>Optimizing database performance with auto-scaling strategies.</p>
+                            <a href="https://medium.com/@sricharan.p99/auto-scale-the-gcp-cloud-sql-read-replica-f1b9365a16a3"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                        <article class="blog-card">
+                            <div class="blog-meta">Aug 25, 2024</div>
+                            <h3>Advice for CXOs of Product Startups</h3>
+                            <p>Governance and strategy checks for small to medium product-based startups.</p>
+                            <a href="https://medium.com/@sricharan.p99/if-you-are-a-cxo-of-a-small-medium-product-based-start-up-please-check-the-following-governing-cb06d1083362"
+                                target="_blank" class="read-more">Read More &rarr;</a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inferences and Analogies Section -->
+            <section id="inferences" class="main-section">
+                <h1 class="section-title">Inferences & Analogies</h1>
+                <div class="analogy-content">
+                    <div class="analogy-item">
+                        <h3>Realization</h3>
+                        <p>Life is not all about technical architecture, code, agents. Hit that 100kg benchpress, create
+                            memories with your aging parents, randomly compliment strangers, take up an investigative
+                            case on a conspiracy theory, go on hitchhiking, enroute a bike trip with no destination,
+                            understand the creators through their oeuvres, study some
+                            non-mainstream science.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resume Download Section -->
+            <section id="resume-download" class="main-section">
+                <h1 class="section-title">Resume Download</h1>
+                <div class="cv-preview">
+                    <p>For a brief documented version of my professional journey, please download my resume.</p>
+                    <a href="Resume_SriCharan_100526.pdf" class="btn download-btn" target="_blank">Download Full Resume</a>
+                </div>
+            </section>
+
+        </main>
     </div>
 
-    <!-- ─── Content (rendered after decryption) ─── -->
-    <div id="content-area">
-        <a href="https://sricharan-11.github.io" class="back-link">
-            <i class="fas fa-arrow-left"></i> Back to Portfolio
-        </a>
-        <div class="letter-card" id="letter-card">
-            <!-- Decrypted content will be injected here -->
-        </div>
-    </div>
-
-    <script>
-        (() => {
-            'use strict';
-
-            // ── Encrypted payload (AES-256-GCM + PBKDF2) ──
-            // Content cannot be read from source — it is only decryptable with the correct password.
-            const EP = {
-                "salt": "LNAU/2V1wZKPixjVphnUIQ==",
-                "iv": "7nERBKQcWsHms6IB",
-                "ciphertext": "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",
-                "iterations": 600000
-            };
-
-            // ── DOM refs ──
-            const overlay = document.getElementById('password-overlay');
-            const form = document.getElementById('password-form');
-            const input = document.getElementById('password-input');
-            const errorEl = document.getElementById('error-msg');
-            const unlockBtn = document.getElementById('unlock-btn');
-            const toggleBtn = document.getElementById('toggle-password');
-            const content = document.getElementById('content-area');
-            const letterEl = document.getElementById('letter-card');
-
-            // ── Toggle password visibility ──
-            toggleBtn.addEventListener('click', () => {
-                const showing = input.type === 'text';
-                input.type = showing ? 'password' : 'text';
-                toggleBtn.querySelector('i').classList.toggle('fa-eye', showing);
-                toggleBtn.querySelector('i').classList.toggle('fa-eye-slash', !showing);
-                input.focus();
-            });
-
-            // ── Helpers ──
-            const b64ToUint8 = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-
-            async function deriveKey(password, salt) {
-                const enc = new TextEncoder();
-                const keyMaterial = await crypto.subtle.importKey(
-                    'raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']
-                );
-                return crypto.subtle.deriveKey(
-                    { name: 'PBKDF2', salt, iterations: EP.iterations, hash: 'SHA-256' },
-                    keyMaterial,
-                    { name: 'AES-GCM', length: 256 },
-                    false,
-                    ['decrypt']
-                );
-            }
-
-            async function decrypt(password) {
-                const salt = b64ToUint8(EP.salt);
-                const iv = b64ToUint8(EP.iv);
-                const ct = b64ToUint8(EP.ciphertext);
-                const key = await deriveKey(password, salt);
-                const plainBuf = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
-                return new TextDecoder().decode(plainBuf);
-            }
-
-            // ── Form submit ──
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const pw = input.value;
-                if (!pw) { showError('Please enter the PIN.'); return; }
-
-                unlockBtn.disabled = true;
-                unlockBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Decrypting...';
-                errorEl.textContent = '';
-
-                try {
-                    const html = await decrypt(pw);
-                    // Success — render content
-                    letterEl.innerHTML = html;
-                    overlay.classList.add('hidden');
-                    content.style.display = 'block';
-                    document.body.style.alignItems = 'flex-start';
-                } catch {
-                    showError('Incorrect PIN. Please try again.');
-                    unlockBtn.disabled = false;
-                    unlockBtn.innerHTML = '<i class="fas fa-unlock-alt"></i>&nbsp; Unlock';
-                    input.select();
-                }
-            });
-
-            function showError(msg) {
-                errorEl.textContent = msg;
-                errorEl.classList.remove('shake');
-                void errorEl.offsetWidth; // reflow
-                errorEl.classList.add('shake');
-            }
-
-            // ── Prevent viewing via DevTools tricks ──
-            // Block right-click context menu
-            document.addEventListener('contextmenu', (e) => e.preventDefault());
-
-            // Keyboard shortcut blocking (F12, Ctrl+Shift+I/J/C, Ctrl+U)
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'F12') e.preventDefault();
-                if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) e.preventDefault();
-                if (e.ctrlKey && ['U', 'u'].includes(e.key)) e.preventDefault();
-            });
-        })();
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
